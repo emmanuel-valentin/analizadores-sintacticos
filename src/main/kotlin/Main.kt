@@ -1,7 +1,32 @@
-fun main(args: Array<String>) {
-  println("Hello World!")
+var existErrors = false
 
-  // Try adding program arguments via Run/Debug configuration.
-  // Learn more about running applications: https://www.jetbrains.com/help/idea/running-applications.html.
-  println("Program arguments: ${args.joinToString()}")
+fun main(args: Array<String>) {
+  runPrompt()
+}
+
+fun runPrompt() {
+  while (true) {
+    print("> ")
+    readlnOrNull()?.let {
+      run(it)
+    }
+  }
+}
+
+fun run(source: String) {
+  val scanner = Scanner(source)
+  val tokens = scanner.scanTokens()
+
+  for (token in tokens) {
+    println(token)
+  }
+}
+
+fun error(line: Int, message: String) {
+  report(line, "", message)
+}
+
+fun report(line: Int, where: String, message: String) {
+  println("[line $line] Error $where: $message")
+  existErrors = true
 }
