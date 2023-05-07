@@ -1,7 +1,7 @@
 class Token(
   private val type: TokenType,
   private val lexeme: String,
-  private val position: Int? = 0,
+  private val position: Int,
 ) {
 
   override fun equals(other: Any?): Boolean {
@@ -13,6 +13,6 @@ class Token(
   }
 
   override fun toString(): String {
-    return "$type $lexeme $position"
+    return "$type $lexeme"
   }
 }
