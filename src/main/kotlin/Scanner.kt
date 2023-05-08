@@ -17,22 +17,13 @@ class Scanner(private val source: String) {
     val lexeme = StringBuilder()
 
     while (i <= source.length) {
-      character = if (i < source.length) source[i] else ' '
+      character = if (i < source.length) source[i] else '\u00A0'
 
       when (state) {
         0 -> when {
-          character == '*' -> {
-            addToken(TokenType.ASTERISK, character.toString(), i + 1)
-          }
-
-          character == ',' -> {
-            addToken(TokenType.COMMA, character.toString(), i + 1)
-          }
-
-          character == '.' -> {
-            addToken(TokenType.DOT, character.toString(), i + 1)
-          }
-
+          character == '*' -> addToken(TokenType.ASTERISK, character.toString(), i + 1)
+          character == ',' -> addToken(TokenType.COMMA, character.toString(), i + 1)
+          character == '.' -> addToken(TokenType.DOT, character.toString(), i + 1)
           character.isLetter() -> {
             state = 1; lexeme.append(character); lexemeStart = i
           }
