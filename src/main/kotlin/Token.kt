@@ -1,7 +1,7 @@
 class Token(
-  private val type: TokenType,
-  private val lexeme: String,
-  private val position: Int,
+  private val type: TokenType? = null,
+  private val lexeme: String = "",
+  internal val position: Int = 0,
 ) {
 
   override fun equals(other: Any?): Boolean {
@@ -14,5 +14,11 @@ class Token(
 
   override fun toString(): String {
     return "$type $lexeme"
+  }
+
+    override fun hashCode(): Int {
+    var result = type?.hashCode() ?: 0
+    result = 31 * result + lexeme.hashCode()
+    return result
   }
 }
