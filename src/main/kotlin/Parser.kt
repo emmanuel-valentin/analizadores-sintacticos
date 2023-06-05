@@ -2,17 +2,16 @@ import java.util.*
 
 class Parser(private val tokens: List<Token>) {
   // Símbolos terminales
-  private val id = Token(TokenType.IDENTIFIER, "")
+  private val id = Token(TokenType.IDENTIFIER)
   private val select = Token(TokenType.SELECT, "select")
   private val from = Token(TokenType.FROM, "from")
   private val distinct = Token(TokenType.DISTINCT, "distinct")
   private val comma = Token(TokenType.COMMA, ",")
   private val dot = Token(TokenType.DOT, ".")
   private val asterisk = Token(TokenType.ASTERISK, "*")
-  private val eof = Token(TokenType.EOF, "")
-  private val epsilon = Token(TokenType.EPSILON, "")
+  private val eof = Token(TokenType.EOF)
 
-    // Simbolos no terminales
+  // Simbolos no terminales
   private val Q = NonTerminalSymbol.Q
   private val D = NonTerminalSymbol.D
   private val P = NonTerminalSymbol.P
@@ -25,7 +24,7 @@ class Parser(private val tokens: List<Token>) {
   private val T2 = NonTerminalSymbol.T2
   private val T3 = NonTerminalSymbol.T3
 
-// Tipo de acciones para la tabla de acción
+  // Tipo de acciones para la tabla de acción
   private val shift = ActionType.SHIFT
   private val reduce = ActionType.REDUCE
   private val accept = ActionType.ACCEPT
@@ -41,7 +40,7 @@ class Parser(private val tokens: List<Token>) {
    * - La lista de valores representa las producciones de la gramática
    */
 
-     private val grammar = mapOf(
+  private val grammar = mapOf(
     1 to mapOf(Q to listOf(select, D, from, T)),
     2 to mapOf(D to listOf(distinct, P)),
     3 to mapOf(D to listOf(P)),
@@ -156,3 +155,52 @@ class Parser(private val tokens: List<Token>) {
     ),
     22 to mapOf(T3 to 23),
   )
+
+  private val stack = Stack<Int>()
+
+  fun parse() {
+    var i = 0
+    var current = tokens[i]
+    stack.push(0)
+
+    while (i < tokens.size) {
+      val state = stack.peek()
+      val action = actionTable[state]?.entries?.find {
+        (entry) -> entry == current
+      }?.value
+
+      // action.first puede ser shift, reduce o accept como se muetra en la sentencia when
+      when (action?.first) {
+        shift -> {
+          // action second indica hacia donde desplazar o sobre qué producción de la gramatica
+          // hay que reducir.
+          stack.push(action.second)
+          current = tokens[++i]
+        }
+
+        reduce -> {
+          var numberOfProductions = grammar[action.second]?.firstNotNullOf { it.value }?.
+              size as Int
+
+          while (numberOfProductions > 0) {
+            stack.pop()
+            numberOfProductions--
+          }
+
+          stack.push(gotoTable[stack.peek()]?.get(grammar[action.second]?.keys?.first()))
+        }
+
+        accept -> {
+          println("Consulta válida")
+          break
+        }
+
+        else -> {
+          error(current.position, "Consulta no válida")
+          break
+        }
+      }
+    }
+  }
+
+}
