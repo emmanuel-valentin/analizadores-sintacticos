@@ -14,4 +14,5 @@ enum class TokenType {
 
   // Final de cadena
   EOF,
+  EPSILON,
 }
