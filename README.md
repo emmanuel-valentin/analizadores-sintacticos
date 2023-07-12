@@ -94,5 +94,5 @@ Puedes ver las tablas de analísis construidas en el siguiente documento, ademá
 
 Esta práctica fue realizada por:
 
-- @emmagp3
-- @alegjs044
+- [@emmagp3](https://github.com/emmagp3)
+- [@alegjs044](https://github.com/alegjs044)
