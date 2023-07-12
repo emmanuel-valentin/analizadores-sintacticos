@@ -84,7 +84,7 @@ Y de la cual también se obtuvieron los cálculos del conjunto primero y siguien
 - Siguiente(T2) = Primero(T1) U Siguiente(T1) = {**,**, $}
 - Siguiente(T3) = Siguiente(T2) = {**,**, \$}
 
-## Tablas de analísis sintácticos
+## Tablas de analísis sintáctico
 
 Puedes ver las tablas de analísis construidas en el siguiente documento, además de incluir los cálculos mostrados previamente:
 
