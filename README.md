@@ -2,8 +2,8 @@
 
 Esta práctica se programaron dos analizadores sintácticos no recursivos:
 
-- Ascendente
-- Descente
+- [Ascendente](https://github.com/emmanuel-valentin/analizadores-sintacticos/tree/Ascendente)
+- [Descente](https://github.com/emmanuel-valentin/analizadores-sintacticos/tree/Descendente).
 
 Para ver cada analizador, puedes clonar este repositorio y moverte a cada una de las ramas que lo contienen.
 
